@@ -1,36 +1,48 @@
-import { Button, Card, CardBody, CardFooter, Typography } from "@material-tailwind/react";
+import { useState,useEffect } from "react";
+import CardPageComponent from "../components/CardPageComponent";
+import { Card, Typography } from "@material-tailwind/react";
 
 
 export default function Home() {
-  
-        return (
-            <div className="w-full min-h-screen bg-info flex flex-col items-center">
-                <div className=" w-full max-h-full p-5 md:p-10">
-                    <Card className="w-full max-h-full p-5">
-                        <Typography variant="h3" color="blue-gray">
-                            Aquí debería ir el Navbar pero aun no lo he creado
-                        </Typography>
-                    </Card>
-                </div>
-                <div className=" w-full max-h-full px-5 md:px-10">
-                    <Card className="w-full min-h-screen">
-                        <CardBody>
-                            <Typography variant="h5" color="blue-gray" className="mb-2">
-                            UI/UX Review Check
-                            </Typography>
-                            <Typography>
-                            The place is close to Barceloneta Beach and bus stop just 2 min by
-                            walk and near to &quot;Naviglio&quot; where you can enjoy the main
-                            night life in Barcelona.
-                            </Typography>
-                        </CardBody>
-                        <CardFooter className="pt-0">
-                            <Button>Read More</Button>
-                        </CardFooter>
-                    </Card>
-                </div>
+    const [currentData, setCurrentData] = useState(new Date());
 
-            </div>
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentData(new Date());
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    const options = { timeZone: 'America/Mexico_City' };
+    const formattedDate = currentData.toLocaleString('en-US', options);
+
+    
+    return(
+        <CardPageComponent>
+            <Card className="w-full min-h-screen" color="transparent">
+                <figure className="relative min-h-screen w-full">
+                    <img
+                        className="h-full w-full rounded-xl object-cover object-center"
+                        src="/src/assets/img/logoMaster.png"
+                        alt="nature image"
+                    />
+                    <figcaption className="absolute bottom-8 left-2/4 flex w-[calc(100%-4rem)] -translate-x-2/4 justify-between rounded-xl border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
+                        <div>
+
+                        <Typography color="gray" className="mt-2 font-normal">
+                            {formattedDate}
+                        </Typography>
+                        </div>
+                        <Typography variant="h5" color="blue-gray">
+                            xd
+                        </Typography>
+                    </figcaption>
+                </figure>
+            </Card>
+        </CardPageComponent>
         );
     }
 

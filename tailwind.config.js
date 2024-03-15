@@ -10,7 +10,7 @@ module.exports = withMT({
   theme: {
     extend: {
       colors:{
-        'info': '#227C9D',
+        'info' : '#227C9D',
         'success': '#17C3B2',
         'warning': '#FFCB77',
         'danger': '#FE6D73',

@@ -15,6 +15,7 @@ module.exports = withMT({
         'warning': '#FFCB77',
         'danger': '#FE6D73',
         'background': '#FEF9EF',
+        'black' : '#293241'
       }
     },
   },

@@ -6,6 +6,8 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import EmailIcon from "../../components/icons/EmailIcon";
+import CandadoIcon from "../../components/icons/CandadoIcon";
 
 export default function Register(){
     return (
@@ -23,9 +25,12 @@ export default function Register(){
                     </div>
                     <form className="mt-5 mb-2 w-80 max-w-screen-lg sm:w-96">
                         <div className="mb-1 flex flex-col gap-6">
+                            <div className="flex flex-row">
+                            <EmailIcon className="pr-2" color='black' />
                             <Typography variant="h6" color="blue-gray" className="-mb-3">
                                 Correo Electrónico
                             </Typography>
+                            </div>
                             <Input
                                 size="lg"
                                 placeholder="name@mail.com"
@@ -34,9 +39,13 @@ export default function Register(){
                                     className: "before:content-none after:content-none",
                                 }}
                             />
+
+                            <div className="flex flex-row">
+                            <CandadoIcon className="pr-2" color="black"/>
                             <Typography variant="h6" color="blue-gray" className="-mb-3">
                                 Contraseña
                             </Typography>
+                            </div>
                             <Input
                                 type="password"
                                 size="lg"
@@ -46,10 +55,12 @@ export default function Register(){
                                     className: "before:content-none after:content-none",
                                 }}
                             />
-
+                            <div className="flex flex-row">
+                            <CandadoIcon className="pr-2" color="black"/>
                             <Typography variant="h6" color="blue-gray" className="-mb-3">
-                                Confirmar Contraseña
+                               Confirmar Contraseña
                             </Typography>
+                            </div>
                             <Input
                                 type="password"
                                 size="lg"

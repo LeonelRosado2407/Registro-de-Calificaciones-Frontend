@@ -2,7 +2,6 @@ import { useState,useEffect } from "react";
 import CardPageComponent from "../components/CardPageComponent";
 import { Card, Typography } from "@material-tailwind/react";
 
-
 export default function Home() {
     const [currentData, setCurrentData] = useState(new Date());
 
@@ -29,6 +28,9 @@ export default function Home() {
                         src="/src/assets/img/logoMaster.png"
                         alt="nature image"
                     />
+                    <div>
+                      
+                    </div>
                     <figcaption className="absolute bottom-8 left-2/4 flex w-[calc(100%-4rem)] -translate-x-2/4 justify-between rounded-xl border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
                         <div>
 

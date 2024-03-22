@@ -8,8 +8,16 @@ import {
 import { Link } from "react-router-dom";
 import EmailIcon from "../../components/icons/EmailIcon";
 import CandadoIcon from "../../components/icons/CandadoIcon";
+import { useState,useEffect } from "react";
 
 export default function Register(){
+
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const [confirmPassword,setConfirmPassword] = useState('');
+
+
+
     return (
         <div className="w-full min-h-screen bg-info flex flex-col items-center justify-center">
             <div className="max-w-screen-md">
@@ -38,10 +46,13 @@ export default function Register(){
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
+                                onChange={(event) =>{
+                                    setEmail(event.target.value);
+                                }}
                             />
 
                             <div className="flex flex-row">
-                            <CandadoIcon className="pr-2" color="black"/>
+                            <CandadoIcon className="pr-2" color="warning"/>
                             <Typography variant="h6" color="blue-gray" className="-mb-3">
                                 Contraseña
                             </Typography>
@@ -56,7 +67,7 @@ export default function Register(){
                                 }}
                             />
                             <div className="flex flex-row">
-                            <CandadoIcon className="pr-2" color="black"/>
+                            <CandadoIcon className="pr-2" color="warning"/>
                             <Typography variant="h6" color="blue-gray" className="-mb-3">
                                Confirmar Contraseña
                             </Typography>

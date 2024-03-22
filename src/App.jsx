@@ -9,6 +9,7 @@ import IndexAlumnos from './pages/Alumnos/index'
 //Auth
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import Pruebas from './pages/Pruebas';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Alumnos" element={<IndexAlumnos />} />
+        <Route path="/pruebas" element={<Pruebas />} />
       </Routes>
       
     </BrowserRouter>

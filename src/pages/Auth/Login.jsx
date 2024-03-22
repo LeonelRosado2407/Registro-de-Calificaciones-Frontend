@@ -40,7 +40,7 @@ export default function Login() {
                                 }}
                             />
                             <div className="flex flex-row">
-                                <CandadoIcon className="pr-2" color="black"/>
+                                <CandadoIcon className="pr-2" color="warning"/>
                                 <Typography variant="h6" color="blue-gray" className="-mb-3">
                                     Contraseña
                                 </Typography>

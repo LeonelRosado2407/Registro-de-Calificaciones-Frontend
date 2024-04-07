@@ -1,5 +1,7 @@
 import './index.css'
 import { BrowserRouter,Route,Routes } from 'react-router-dom'
+import { AuthProvider } from "./context/AuthContext.jsx";
+import ProtectedRoute from './protectedRoute.jsx';
 
 
 //Pages
@@ -15,16 +17,19 @@ import Pruebas from './pages/Pruebas';
 function App() {
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/Alumnos" element={<IndexAlumnos />} />
-        <Route path="/pruebas" element={<Pruebas />} />
-      </Routes>
-      
-    </BrowserRouter>
+    <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/Login" element={<Login />} />
+              <Route path="/Register" element={<Register />} />
+              <Route element={<ProtectedRoute/>}>
+                <Route path="/Alumnos" element={<IndexAlumnos />} />
+                <Route path="/pruebas" element={<Pruebas />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+    </AuthProvider>
   )
 
 

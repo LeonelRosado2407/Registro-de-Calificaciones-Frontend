@@ -9,8 +9,30 @@ import { Link } from "react-router-dom";
 import EmailIcon from "../../components/icons/EmailIcon";
 import CandadoIcon from "../../components/icons/CandadoIcon";
 
+import { useAuth } from "../../context/AuthContext";
+import { useForm ,} from "react-hook-form";
+import { useEffect } from "react";
+import {useNavigate} from "react-router-dom";
+
 
 export default function Login() {
+
+    const {register,handleSubmit, formState:{errors}} = useForm();
+
+    const { singIn, isAutenticated, errors: LoginErrors } = useAuth();
+
+    const navigate = useNavigate();
+    
+    useEffect(()=>{
+        if(isAutenticated){
+            navigate("/");
+        }
+    },[isAutenticated])
+
+    const onSubmit = handleSubmit(data =>{
+        singIn(data);
+    })
+
     return (
         <div className="w-full min-h-screen bg-info flex flex-col items-center justify-center">
             <div className="max-w-screen-md">
@@ -23,7 +45,14 @@ export default function Login() {
                             <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
                         </svg>
                     </div>
-                    <form className="mt-5 mb-2 w-80 max-w-screen-lg sm:w-96">
+                {
+                    LoginErrors.map((error,i)=>(
+                        <div className=" text-background  bg-danger p-2  " key={i}>  
+                            {error}
+                        </div>
+                    ))
+                }
+                    <form className="mt-5 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={onSubmit}>
                         <div className="mb-1 flex flex-col gap-6">
                             <div className="flex flex-row">
                                 <EmailIcon className="pr-2" color='black' />
@@ -38,7 +67,10 @@ export default function Login() {
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
+                                {...register("email",{required:true})}
                             />
+                            {errors.email && (<p className="text-red-500">Este campo es requerido</p>)}
+                                                        
                             <div className="flex flex-row">
                                 <CandadoIcon className="pr-2" color="warning"/>
                                 <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -53,7 +85,9 @@ export default function Login() {
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
+                                {...register("password",{required:true})}
                             />
+                            {errors.password && (<p className="text-red-500">Este campo es requerido</p>)}
                         </div>
                         <Checkbox
                             label={
@@ -68,7 +102,7 @@ export default function Login() {
                             containerProps={{ className: "-ml-2.5" }}
                             className=" checked:bg-info checked:border-info"
                         />
-                        <Button className="mt-6 bg-info" fullWidth>
+                        <Button className="mt-6 bg-info" fullWidth type="submit">
                             Iniciar Sesión
                         </Button>
 

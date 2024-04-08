@@ -12,6 +12,7 @@ import IndexAlumnos from './pages/Alumnos/index'
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import Pruebas from './pages/Pruebas';
+import LogoutComponent from './components/LogoutComponent.jsx';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route element={<ProtectedRoute/>}>
                 <Route path="/Alumnos" element={<IndexAlumnos />} />
                 <Route path="/pruebas" element={<Pruebas />} />
+                <Route path="/logout" element={<LogoutComponent />} />
               </Route>
             </Routes>
           </BrowserRouter>

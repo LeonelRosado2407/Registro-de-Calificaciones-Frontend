@@ -41,6 +41,17 @@ function NavList() {
             Perfil
         </NavLink>
       </Typography>
+      
+      <Typography
+        as="li"
+        color="blue-gray"
+        className="p-1 font-medium"
+      >
+        <NavLink to="/logout" className="flex items-center hover:text-info transition-colors">
+            Cerrar Sesión
+        </NavLink>
+      </Typography>
+
     </ul>
   );
 }

@@ -9,7 +9,8 @@ import {
 import { 
     registerRequest,
     loginRequest, 
-    verifyTokenRequest
+    verifyTokenRequest,
+    logoutRequest
  } from "../api/auth.js";
 
 import Cookies from "js-cookie";
@@ -55,6 +56,16 @@ export const AuthProvider = ({children}) => {
         } catch (error) {
             console.log(error);
             // setError(error.response.data);
+        }
+    }
+    const logout = async() =>{
+        try {
+            const res = await logoutRequest();
+            console.log(res.data);
+            setUsuario(null);
+            setIsAutenticated(false);
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -108,10 +119,11 @@ export const AuthProvider = ({children}) => {
         <AuthContext.Provider value={{
             signup,
             singIn,
+            logout,
             usuario,
             isAutenticated,
             errors,
-            loading
+            loading,
         }}>
             {children}
         </AuthContext.Provider>

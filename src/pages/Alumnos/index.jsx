@@ -1,7 +1,4 @@
-import CardPageComponent from "../../components/CardPageComponent";
-
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-
+import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid"
 import {
   CardHeader,
   Input,
@@ -11,19 +8,33 @@ import {
   CardFooter,
   IconButton,
   Tooltip,
-  Card,
-  DialogHeader,
+  Card
 } from "@material-tailwind/react";
-import React from "react";
-import Modal from "../../components/Modal/Modal";
-import ModalHeader from "../../components/Modal/ModalHeader";
-import ModalBody from "../../components/Modal/ModalBody";
+import React, { useEffect } from "react";
+import CardPageComponent from "../../components/CardPageComponent.jsx";
+import Table from '../../components/Tabla/TablaComponent.jsx';
+
+import { useAlumnos } from "../../context/AlumnosContext";
+import { AddAlumno, UpdateAlumno } from "../../components/Modal/Alumnos/ModalAddAlumno.jsx";
 
 //  nombre,edad,correo y contraseña
 export default function index() {
-  const [open, setOpen] = React.useState(false);
- 
-  const handleOpen = () => setOpen(!open);
+
+  const [openAdd, setOpenAdd] = React.useState(false);
+  const [openUpdate, setOpenUpdate] = React.useState(false);
+
+  const handleOpen = () => setOpenAdd(!openAdd);
+  const handleOpenUpdate = () => setOpenUpdate(!openUpdate);
+
+  const openUpdateModal = async (alumno) => {
+    await selectAlumno(alumno);
+    handleOpenUpdate();
+  }
+
+
+  const { alumnos, selectAlumno } = useAlumnos();
+
+  const headers = ["Nombres", "Apellidos", "Edad", "Grado", "Opciones"]
 
   return (
     <>
@@ -46,79 +57,60 @@ export default function index() {
               </div>
             </div>
           </CardHeader>
+
           <CardBody className="overflow-scroll md:overflow-hidden px-5">
-            <table className="mt-4 w-full min-w-max table-auto text-left">
+            <Table>
               <thead>
                 <tr>
-                    <th className="cursor-pointer border-y border-blue-gray-100 bg-info p-4 transition-colors hover:bg-opacity-70">
-                      <Typography variant="h6" color="white" className="flex items-center justify-between gap-2 font-bold leading-none opacity-70">
-                        <span>Nombre</span>
-                      </Typography>
-                    </th>
-                    <th className="cursor-pointer border-y border-blue-gray-100 bg-info p-4 transition-colors hover:bg-opacity-70">
-                      <Typography variant="h6" color="white" className="flex items-center justify-between gap-2 font-bold leading-none opacity-70">
-                        <span>Correo</span>
-                      </Typography>
-                    </th>
-                    <th className="cursor-pointer border-y border-blue-gray-100 bg-info p-4 transition-colors hover:bg-opacity-70">
-                      <Typography variant="h6" color="white" className="flex items-center justify-between gap-2 font-bold leading-none opacity-70">
-                        <span>Materia 1</span>
-                      </Typography>
-                    </th>
-                    <th className="cursor-pointer border-y border-blue-gray-100 bg-info p-4 transition-colors hover:bg-opacity-70">
-                      <Typography variant="h6" color="white" className="flex items-center justify-between gap-2 font-bold leading-none opacity-70">
-                        <span>Materia 2</span>
-                      </Typography>
-                    </th>
-                    <th className="cursor-pointer border-y border-blue-gray-100 bg-info p-4 transition-colors hover:bg-opacity-70">
-                      <Typography variant="h6" color="white" className="flex items-center justify-between gap-2 font-bold leading-none opacity-70">
-                        <span>Materia 3</span>
-                      </Typography>
-                    </th>
-                    <th className="cursor-pointer border-y border-blue-gray-100 bg-info p-4 transition-colors hover:bg-opacity-70">
-                      <Typography variant="h6" color="white" className="flex items-center justify-between gap-2 font-bold leading-none opacity-70">
-                        <span>Editar</span>
-                      </Typography>
-                    </th>
+                  {headers.map((header, index) => {
+                    return (
+                      <th className="cursor-pointer border-y border-blue-gray-100 bg-info p-4 transition-colors hover:bg-opacity-70" key={index}>
+                        <Typography variant="h6" color="white" className="flex items-center justify-between gap-2 font-bold leading-none opacity-70">
+                          <span>{header}</span>
+                        </Typography>
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="">
-                    <Typography variant="small" color="blue-gray" className="font-normal p-4" >
-                      Leoponcio
-                    </Typography>
-                  </td>
-                  <td className="">
-                    <Typography variant="small" color="blue-gray" className="font-normal p-4">
-                        Leoponcio123@gmail.com
-                      </Typography>
-                  </td>
-                  <td className="">
-                    <Typography variant="small" color="blue-gray" className="font-normal p-4">
-                      10
-                    </Typography>
-                  </td>
-                  <td className="">
-                    <Typography variant="small" color="blue-gray" className="font-normal p-4">
-                      10
-                    </Typography>
-                  </td>
-                  <td className="">
-                    <Typography variant="small" color="blue-gray" className="font-normal p-4">
-                      10
-                    </Typography>
-                  </td>
-                  <td className="">
-                    <Tooltip content="Edit User">
-                      <IconButton variant="text">
-                        <PencilIcon className="h-4 w-4" />
-                      </IconButton>
-                    </Tooltip>
-                  </td>
-                </tr>
+                {alumnos.map((alumno) => {
+                  return (
+                    <tr key={alumno._id}>
+                      <td className="">
+                        <Typography variant="small" color="blue-gray" className="font-normal p-4" >
+                          {alumno.nombres}
+                        </Typography>
+                      </td>
+                      <td className="">
+                        <Typography variant="small" color="blue-gray" className="font-normal p-4">
+                          {alumno.apellidos}
+                        </Typography>
+                      </td>
+                      <td className="">
+                        <Typography variant="small" color="blue-gray" className="font-normal p-4">
+                          {alumno.edad}
+                        </Typography>
+                      </td>
+                      <td className="">
+                        <Typography variant="small" color="blue-gray" className="font-normal p-4">
+                          {alumno.grado}
+                        </Typography>
+                      </td>
+                      <td className="">
+                        <Tooltip content="Edit User">
+                          <IconButton variant="text" onClick={() => {
+                            openUpdateModal(alumno)
+                          }}>
+                            <PencilIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
-            </table>
+            </Table>
           </CardBody>
           <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
             <Typography variant="small" color="blue-gray" className="font-normal">
@@ -136,61 +128,9 @@ export default function index() {
         </Card>
       </CardPageComponent>
 
-      <Modal open={open} onClose={handleOpen} size='xl'>
-        <ModalHeader className="p-5">
-          <div className="flex items-center justify-between">
-            <Typography className="mb-1 text-info" variant="h4">
-              Agregar Un Nuevo Alumno
-            </Typography>
-            
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="mr-3 h-5 w-5"onClick={handleOpen}>
-              <path
-                fillRule="evenodd"
-                d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-                clipRule="evenodd"
-              />
-            </svg>
+      <AddAlumno open={openAdd} onClose={handleOpen} size='xl' />
+      <UpdateAlumno open={openUpdate} onClose={handleOpenUpdate} size='xl' />
 
-          </div>
-          <Typography className="mb-5" color="gray" variant="lead">
-            Por favor proporcione los datos del alumno
-          </Typography>
-        </ModalHeader>
-
-
-
-        <ModalBody clasName="pl-5 grid gap-3 mb-10">
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Nombre
-            </Typography>
-            <Input label="Nombre"/>
-
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Edad
-            </Typography>
-            <Input label="Edad"/>
-
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Correo
-            </Typography>
-            <Input label="Correo"/>
-
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Contraseña
-            </Typography>
-            <Input label="Contraseña"/>
-        </ModalBody>
-
-        <div className=" flex flex-col md:flex-row justify-end">
-          <button className="bg-transparent mx-2.5 px-7 py-2.5 rounded-md hover:bg-gray-400" onClick={handleOpen}>
-            <span className=" text-xs font-semibold">CANCELAR</span>
-          </button>
-
-          <button className=" bg-info mx-2.5 px-7 py-2.5 rounded-md hover:shadow-xl " onClick={handleOpen}>
-            <span className=" text-xs font-semibold text-background">AGREGAR USUARIO</span>
-          </button>
-        </div>
-      </Modal>
     </>
 
   );

@@ -74,7 +74,7 @@ export default function Register(){
                                 }}
                                 {...register("username",{required:true})}
                             />
-                            {errors.username && (<p className="text-red-500">Este campo es requerido</p>)}
+     
 
 
                             <div className="flex flex-row">

@@ -1,4 +1,4 @@
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid"
+import { PencilIcon, UserPlusIcon, ArchiveBoxIcon  } from "@heroicons/react/24/solid"
 import {
   CardHeader,
   Input,
@@ -10,25 +10,32 @@ import {
   Tooltip,
   Card
 } from "@material-tailwind/react";
-import React, { useEffect } from "react";
+import { useEffect,useState } from "react";
 import CardPageComponent from "../../components/CardPageComponent.jsx";
 import Table from '../../components/Tabla/TablaComponent.jsx';
 
 import { useAlumnos } from "../../context/AlumnosContext";
-import { AddAlumno, UpdateAlumno } from "../../components/Modal/Alumnos/ModalAddAlumno.jsx";
+import { AddAlumno, UpdateAlumno, DeleteAlumno } from "../../components/Modal/Alumnos/ModalAddAlumno.jsx";
 
 //  nombre,edad,correo y contraseña
 export default function index() {
 
-  const [openAdd, setOpenAdd] = React.useState(false);
-  const [openUpdate, setOpenUpdate] = React.useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
 
   const handleOpen = () => setOpenAdd(!openAdd);
   const handleOpenUpdate = () => setOpenUpdate(!openUpdate);
+  const handleDelete = () => setOpenDelete(!openDelete);
 
-  const openUpdateModal = async (alumno) => {
-    await selectAlumno(alumno);
+  const openUpdateModal = (alumno) => {
+    selectAlumno(alumno);
     handleOpenUpdate();
+  }
+
+  const openDeleteModal = (alumno) => {
+    selectAlumno(alumno);
+    handleDelete();
   }
 
 
@@ -98,11 +105,18 @@ export default function index() {
                         </Typography>
                       </td>
                       <td className="">
-                        <Tooltip content="Edit User">
+                        <Tooltip content="Editar Alumno">
                           <IconButton variant="text" onClick={() => {
                             openUpdateModal(alumno)
                           }}>
-                            <PencilIcon className="h-4 w-4" />
+                            <PencilIcon className="h-4 w-4 text-warning" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip content="Eliminar Alumno">
+                          <IconButton variant="text" onClick={() => {
+                            openDeleteModal(alumno)
+                          }}>
+                            <ArchiveBoxIcon className="h-4 w-4 text-danger"  />
                           </IconButton>
                         </Tooltip>
                       </td>
@@ -130,6 +144,7 @@ export default function index() {
 
       <AddAlumno open={openAdd} onClose={handleOpen} size='xl' />
       <UpdateAlumno open={openUpdate} onClose={handleOpenUpdate} size='xl' />
+      <DeleteAlumno open={openDelete} onClose={handleDelete} size='xl' />
 
     </>
 

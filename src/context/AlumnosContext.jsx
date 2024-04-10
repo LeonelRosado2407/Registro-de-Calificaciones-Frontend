@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getAlumnosRequest } from '../api/alumnos.js';
+import { getAlumnosRequest,addAlumnoRequest, getAlumnoRequest,updateAlumnoRequest,deleteAlumnoRequest } from '../api/alumnos.js';
 
 export const AlumnosContext = createContext();
 
@@ -13,8 +13,9 @@ export const useAlumnos = () => {
 };
 
 export const AlumnosProvider = ({ children }) => {
-  const [alumnos, setAlumnos] = useState([{ nombres: '', apellidos: '', edad: '', grado: '' }]);
-  const [alumnoUpdate, setAlumnoUpdate] = useState({ nombres: '', apellidos: '', edad: '', grado: '' });
+  const [alumnos, setAlumnos] = useState([{ _id:'', nombres: '', apellidos: '', edad: '', grado: '' }]);
+  const [alumnoSelected, setAlumnoSelected] = useState({_id : '', nombres: '', apellidos: '', edad: '', grado: '' });
+  const [error, setError] = useState([]);
 
   const getAlumnos = async () => {
     try {
@@ -22,37 +23,72 @@ export const AlumnosProvider = ({ children }) => {
       setAlumnos(res.data);
 
     } catch (error) {
-      console.log(error);
+      setError(error.response.data);
       setAlumnos([]);
     }
   };
-  const AddAlumno = async () => {
+
+  const getAlumno = async (id) => {
     try {
-      const res = await addAlumnoRequest();
+      const res = await getAlumnoRequest(id);
       setAlumnos(res.data);
     } catch (error) {
+      setError(error.response.data);
+      setAlumnos([]);
+    }
+  };
+
+  const AddAlumno = async (alumno) => {
+    try {
+      const res = await addAlumnoRequest(alumno);
+      getAlumnos();
+    } catch (error) {
+      setError(error.response.data);
+      setAlumnos([]);
+    }
+  }
+
+  const UpdateAlumno = async(id,alumno) =>{
+    try {
+      const res = await updateAlumnoRequest(id,alumno);
+      getAlumnos();
+    } catch (error) {
+      setError(error.response.data);
+      setAlumnos([]);
+    }
+  }
+
+  const DeleteAlumno = async (id) =>{
+    try {
+      const res = await deleteAlumnoRequest(id);
+      getAlumnos();
+    } catch (error) {
       console.log(error);
+      setError(error.response);
       setAlumnos([]);
     }
   }
 
   const selectAlumno = (alumno) => {
-    console.log(alumno);
-    setAlumnoUpdate(alumno);
+    setAlumnoSelected(alumno);
   }
 
   useEffect(() => {
     getAlumnos();
   }
-    , []);
+  , []);
 
   return (
     <AlumnosContext.Provider value={{
       alumnos,
-      alumnoUpdate,
+      alumnoSelected,
+      error,
       getAlumnos,
+      getAlumno,
       selectAlumno,
-      AddAlumno
+      AddAlumno,
+      UpdateAlumno,
+      DeleteAlumno
     }}>
       {children}
     </AlumnosContext.Provider>

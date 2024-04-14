@@ -233,7 +233,7 @@ export const UpdateAlumno = ({ open, onClose, size }) => {
             </button>
 
             <button
-              className=" bg-info mx-2.5 px-7 py-2.5 rounded-md hover:shadow-xl "
+              className=" bg-warning mx-2.5 px-7 py-2.5 rounded-md hover:shadow-xl "
               // onClick={onClose}
               type="submit"
             >
@@ -294,11 +294,11 @@ export const DeleteAlumno = ({ open, onClose }) => {
               </Typography>
             </ModalHeader>
             {
-                // AlumnosErrors.map((error,i)=>(
-                //     <div className="bg-danger p-5 text-background w-full rounded-lg " key={i}>  
-                //         {error}
-                //     </div>
-                // ))
+                AlumnosErrors.map((error,i)=>(
+                    <div className="bg-danger p-5 text-background w-full rounded-lg " key={i}>  
+                        {error}
+                    </div>
+                ))
             }
 
             <div className=" flex flex-col md:flex-row justify-end">
@@ -310,7 +310,7 @@ export const DeleteAlumno = ({ open, onClose }) => {
             </button>
 
             <button
-              className=" bg-info mx-2.5 px-7 py-2.5 rounded-md hover:shadow-xl "
+              className=" bg-danger mx-2.5 px-7 py-2.5 rounded-md hover:shadow-xl "
               onClick={eliminarALumno}
               type="submit"
             >

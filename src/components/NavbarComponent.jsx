@@ -7,9 +7,13 @@ import {
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
+import { useAlumnos } from "../context/AlumnosContext";
+import { useMaterias } from "../context/MateriasContext";
 
 
 function NavList() {
+  const { getAlumnos } = useAlumnos();
+  const { getMaterias } = useMaterias();
   return (
     <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -27,8 +31,18 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <NavLink to="/Alumnos" className="flex items-center hover:text-info transition-colors">
+        <NavLink to="/Alumnos" className="flex items-center hover:text-info transition-colors" onClick={getAlumnos}>
             Alumnos
+        </NavLink>
+      </Typography>
+
+      <Typography
+        as="li"
+        color="blue-gray"
+        className="p-1 font-medium"
+      >
+        <NavLink to="/Materias" className="flex items-center hover:text-info transition-colors" onClick={getMaterias}>
+            Materias
         </NavLink>
       </Typography>
 

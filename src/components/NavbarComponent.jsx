@@ -21,16 +21,6 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <NavLink to="/" className="flex items-center hover:text-info transition-colors">
-            Califiaciones
-        </NavLink>
-      </Typography>
-
-      <Typography
-        as="li"
-        color="blue-gray"
-        className="p-1 font-medium"
-      >
         <NavLink to="/Alumnos" className="flex items-center hover:text-info transition-colors" onClick={getAlumnos}>
             Alumnos
         </NavLink>
@@ -51,7 +41,17 @@ function NavList() {
         color="blue-gray"
         className="p-1 font-medium"
       >
-        <NavLink to="/" className="flex items-center hover:text-info transition-colors">
+        <NavLink to="/Calificaciones" className="flex items-center hover:text-info transition-colors" onClick={getMaterias}>
+            Calificaciones
+        </NavLink>
+      </Typography>
+
+      <Typography
+        as="li"
+        color="blue-gray"
+        className="p-1 font-medium"
+      >
+        <NavLink to="/Profile" className="flex items-center hover:text-info transition-colors">
             Perfil
         </NavLink>
       </Typography>

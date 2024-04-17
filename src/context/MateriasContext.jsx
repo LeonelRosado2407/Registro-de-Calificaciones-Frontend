@@ -1,6 +1,5 @@
-import { createContext, useContext, useState, useEffect, Children } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { addMateriaRequest, getMateriaRequest, getMateriasRequest,updateMateriaRequest,deleteMateriaRequest } from "../api/materias";
-import { set } from "react-hook-form";
 
 
 export const MateriasContext = createContext();
@@ -13,7 +12,7 @@ export const useMaterias = () =>{
     }
 
     return context;
-};0
+};
 
 export const MateriasProvider = ({ children }) => {
     const [materias, setMaterias]  = useState([]);
